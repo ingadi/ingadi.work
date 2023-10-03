@@ -1,1 +1,1 @@
-Repository for my portfolio website ingadi.work created with Astro https://astro.build/
+Repo for my blog ingadi.work created with Astro https://astro.build/
