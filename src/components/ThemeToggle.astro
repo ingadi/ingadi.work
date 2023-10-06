@@ -1,5 +1,10 @@
 ---
 import { Sun, Moon } from "lucide-astro";
+
+import {
+  lightBackgroundPattern,
+  darkBackgroundPattern,
+} from "../constants/backgroundPattern";
 ---
 
 <label
@@ -25,7 +30,35 @@ import { Sun, Moon } from "lucide-astro";
   <span class="sr-only">Toggle theme</span>
 </label>
 
-<script>
+<script define:vars={{ lightBackgroundPattern, darkBackgroundPattern }}>
+  addEventListener("load", async () => {
+    const checkbox = document.getElementById("checkbox");
+    const isDark = document.documentElement.classList.contains("dark");
+    checkbox.checked = isDark;
+
+    const backgrounds = [lightBackgroundPattern, darkBackgroundPattern];
+    document.body.style.backgroundImage = backgrounds[Number(isDark)];
+
+    checkbox?.addEventListener("change", (e) => {
+      if (e.target === null) return;
+      const checkboxElement = e.target;
+
+      document.documentElement.classList.toggle("dark");
+      document.body.style.backgroundImage =
+        backgrounds[Number(checkboxElement.checked)];
+    });
+
+    checkbox.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        const checkboxElement = e.target;
+        checkboxElement.checked = !checkboxElement.checked;
+        checkboxElement.dispatchEvent(new Event("change"));
+      }
+    });
+  });
+</script>
+
+<!-- <script>
   addEventListener("load", async () => {
     const checkbox = document.getElementById("checkbox") as HTMLInputElement;
     const isDark = document.documentElement.classList.contains("dark");
@@ -55,4 +88,4 @@ import { Sun, Moon } from "lucide-astro";
       }
     });
   });
-</script>
+</script> -->
