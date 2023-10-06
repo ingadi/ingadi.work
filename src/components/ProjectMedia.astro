@@ -1,24 +1,22 @@
 ---
-import clsx from "clsx";
-
 interface Props {
   img: string;
   img_alt: string;
   video?: string;
 }
 
-function getImgStyles(hasVideo: boolean) {
-  return clsx({
-    "hidden aspect-square h-24 animate-shimmer select-none rounded-md bg-gradient-to-br from-sage-600 via-sage-400 to-sage-600 bg-400% md:block hover-hover:lg:col-span-full hover-hover:lg:row-span-full hover-hover:lg:aspect-video hover-hover:lg:h-52 hover-hover:lg:w-full": true,
-    "hover-hover:lg:visible hover-hover:lg:group-hover:invisible": hasVideo,
-  });
-}
-
 const { img, img_alt, video } = Astro.props;
 ---
 
 <img
-  class={getImgStyles(video !== undefined)}
+  class:list={[
+    "hidden aspect-square h-24 animate-shimmer select-none rounded-md bg-gradient-to-br from-sage-600 via-sage-400 to-sage-600 bg-400% md:block hover-hover:lg:col-span-full hover-hover:lg:row-span-full hover-hover:lg:aspect-video hover-hover:lg:h-52 hover-hover:lg:w-full",
+    ,
+    {
+      "hover-hover:lg:visible hover-hover:lg:group-hover:invisible":
+        video !== undefined,
+    },
+  ]}
   src={img}
   alt={img_alt || ""}
   loading="lazy"
