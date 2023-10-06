@@ -1,0 +1,65 @@
+---
+import {
+  Github,
+  Linkedin,
+  Twitter,
+  Rss,
+  FileDown,
+  Codepen,
+  Mail,
+} from "lucide-astro";
+
+import Leetcode from "./Leetcode.astro";
+import Codewars from "./Codewars.astro";
+
+const links = [
+  {
+    name: "Codewars",
+    Icon: Codewars,
+    href: "https://www.codewars.com/users/ingadi",
+  },
+  { name: "Github", Icon: Github, href: `https://github.com/ingadi` },
+  {
+    name: "Linkedin",
+    Icon: Linkedin,
+    href: "https://linkedin.com/in/axel-ingadi-3138a4277/",
+  },
+  { name: "Codepen", Icon: Codepen, href: "https://codepen.io/ingadi" },
+  { name: "Twitter", Icon: Twitter, href: "https://twitter.com/ingadi_" },
+  // { name: "Email", Icon: Mail, href: "https://github.com/ingadi" },
+  // { name: "Rss", Icon: Rss, href: "https://github.com/ingadi" },
+  { name: "Leetcode", Icon: Leetcode, href: "https://leetcode.com/ingadi/" },
+];
+
+const { name } = Astro.props;
+---
+
+<ul
+  aria-description=`A list of ${name}'s social links`
+  class="flex items-center gap-1"
+>
+  {
+    links.map(({ Icon, href, name }) => (
+      <li>
+        <a
+          aria-label={`Link to ${name}`}
+          class=" inline-block rounded-full p-2 transition-all hover:bg-sage-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:hover:text-yellow-900 dark:focus-visible:ring-green-600  hover-none:scale-110"
+          href={href}
+          target="_blank"
+        >
+          <Icon />
+        </a>
+      </li>
+    ))
+  }
+  <li>
+    <a
+      aria-label="Download Axel's resume"
+      class="inline-block rounded-full p-2 transition-all hover:bg-sage-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:hover:text-yellow-900 dark:focus-visible:ring-green-600"
+      href="/resume.pdf"
+      download="Axel's Resume"
+    >
+      <FileDown />
+    </a>
+  </li>
+</ul>

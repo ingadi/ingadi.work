@@ -1,0 +1,79 @@
+---
+import { ArrowRight } from "lucide-astro";
+import { formatDate } from "../utils";
+import ProjectMedia from "./ProjectMedia.astro";
+import clsx from "clsx";
+
+interface Props {
+  title: string;
+  img: string;
+  video?: string;
+  description: string;
+  img_alt: string;
+  slug: string;
+  tags: string[];
+  pubDate: Date;
+  count: number;
+}
+
+function getDescriptionStyles(hasVideo: boolean) {
+  return clsx({
+    "flex gap-1 transition-all hover-hover:lg:pointer-events-none hover-hover:lg:relative hover-hover:lg:col-span-full hover-hover:lg:row-span-full hover-hover:lg:flex-col hover-hover:lg:justify-between hover-hover:lg:overflow-hidden hover-hover:lg:rounded-md hover-hover:lg:bg-gradient-to-b hover-hover:lg:from-gray-900/40 hover-hover:lg:via-gray-50/0 hover-hover:lg:to-gray-900/40 hover-hover:lg:p-2": true,
+    "hover-hover:lg:group-hover:opacity-60": hasVideo,
+  });
+}
+
+const { title, img, img_alt, video, slug, pubDate, description, tags, count } =
+  Astro.props;
+---
+
+<a
+  aria-description={`Read more about ${title}`}
+  class="inline-block rounded-md p-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:focus-visible:ring-green-600"
+  href={`/projects/${slug}`}
+>
+  <article
+    class="group flex flex-row-reverse gap-8 hover-hover:lg:grid hover-hover:lg:break-inside-avoid hover-hover:lg:gap-3"
+  >
+    <ProjectMedia img={img} img_alt={img_alt} video={video} />
+    <div class={getDescriptionStyles(video !== undefined)}>
+      <strong
+        class="select-none self-start font-brand text-sm text-green-800 dark:text-green-600/70 hover-hover:lg:font-body hover-hover:lg:text-yellow-300 hover-hover:dark:lg:text-yellow-500"
+        >#{count}</strong
+      >
+
+      <div
+        class="border-b border-dashed border-sage-500 pb-4 dark:border-yellow-600/40 hover-hover:lg:select-none hover-hover:lg:border-0 hover-hover:lg:p-0"
+      >
+        <h2
+          class="flex justify-between text-lg font-bold text-sage-700 dark:text-sage-500 md:text-xl hover-hover:lg:text-lg hover-hover:lg:text-yellow-300 hover-hover:dark:lg:text-yellow-500"
+        >
+          <span class="line-clamp-2 hover-hover:lg:line-clamp-1">{title}</span>
+          <ArrowRight
+            class="opacity-50 hover-hover:lg:absolute hover-hover:lg:right-2 hover-hover:lg:top-2 hover-hover:lg:-translate-x-1/2 hover-hover:lg:opacity-0 hover-hover:lg:transition-all hover-hover:lg:group-hover:translate-x-0 hover-hover:lg:group-hover:opacity-100"
+          />
+        </h2>
+
+        <p class="line-clamp-3 text-lg hover-hover:lg:hidden">
+          {description}
+        </p>
+        <div
+          class="flex items-center justify-between text-sm font-bold hover-hover:lg:font-normal hover-hover:lg:text-yellow-300 hover-hover:dark:lg:text-yellow-500"
+        >
+          <span
+            class="line-clamp-1 text-green-800 dark:text-green-600/70 hover-hover:lg:text-yellow-300 hover-hover:dark:lg:text-yellow-500"
+            >{tags.join(", ")}</span
+          >
+          <span
+            class="flex items-center gap-1 rounded-sm hover-hover:lg:absolute hover-hover:lg:bottom-2 hover-hover:lg:right-1 hover-hover:lg:rotate-180 hover-hover:lg:bg-black/20 hover-hover:lg:py-2 hover-hover:lg:[writing-mode:vertical-lr]"
+          >
+            <span aria-hidden="true">&mdash;</span>
+            <time datetime={formatDate(pubDate)}>
+              {formatDate(pubDate)}
+            </time>
+          </span>
+        </div>
+      </div>
+    </div>
+  </article>
+</a>

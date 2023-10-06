@@ -1,0 +1,30 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  subSubTitle?: string;
+}
+
+const { title, subtitle, subSubTitle } = Astro.props;
+const titles = [title];
+---
+
+<article class="md:flex md:items-start md:gap-1">
+  <h1
+    class="hidden select-none font-headline uppercase tracking-wider text-sage-700 [writing-mode:vertical-lr] dark:text-sage-500 lg:sticky lg:top-8 lg:flex lg:items-center lg:gap-3 lg:opacity-30"
+  >
+    {
+      titles.map((title, id) => (
+        <>
+          <span class="text-5xl 2xl:text-7xl">{title}</span>
+          {id !== titles.length - 1 && (
+            <span aria-hidden="true" class="text-5xl 2xl:text-7xl">
+              &sol;
+            </span>
+          )}
+        </>
+      ))
+    }
+  </h1>
+  <slot />
+</article>

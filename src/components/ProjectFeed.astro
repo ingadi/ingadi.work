@@ -1,0 +1,62 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ProjectPreview from "./ProjectPreview.astro";
+
+type ProjectPreview = Pick<CollectionEntry<"posts">, "data" | "slug">;
+
+interface Props {
+  projectPreviews: ProjectPreview[];
+}
+
+const { projectPreviews } = Astro.props;
+---
+
+{
+  projectPreviews.map(({ data, slug }, id) => (
+    <ProjectPreview
+      title={data.title}
+      img={data.img}
+      img_alt={data.img_alt || ""}
+      description={data.description}
+      video={data.video}
+      tags={data.tags}
+      slug={slug}
+      pubDate={data.pubDate}
+      count={projectPreviews.length - id}
+    />
+  ))
+}
+
+<script>
+  const projectFeedElement = document.getElementById("project-feed");
+
+  if (projectFeedElement) {
+    projectFeedElement.addEventListener("mouseover", (event) => {
+      if (!(event.target instanceof HTMLVideoElement)) return;
+      const videoElement = event.target;
+
+      if (!videoElement.classList.contains("lazy")) {
+        videoElement.play();
+        return;
+      }
+
+      for (const source in videoElement.children) {
+        const videoSource = videoElement.children[source] as HTMLSourceElement;
+
+        if (videoSource.tagName === "SOURCE" && videoSource.dataset.src) {
+          videoSource.src = videoSource.dataset.src;
+        }
+      }
+
+      videoElement.load();
+      videoElement.classList.remove("lazy");
+    });
+
+    projectFeedElement.addEventListener("mouseout", (event) => {
+      if (!(event.target instanceof HTMLVideoElement)) return;
+      const videoElement = event.target;
+      videoElement.pause();
+      videoElement.currentTime = 0;
+    });
+  }
+</script>

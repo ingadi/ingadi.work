@@ -1,0 +1,89 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Tags from "../components/Tags.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  img: string;
+  img_alt: string;
+  video?: string;
+  tags: string[];
+  modDate: string;
+  pubDate: string;
+  summary?: string;
+}
+
+const {
+  title,
+  description,
+  img,
+  img_alt,
+  tags,
+  modDate,
+  pubDate,
+  video,
+  summary,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="flex flex-col gap-12 px-4 text-lg md:px-7 md:text-xl lg:p-0">
+    <header
+      class="flex flex-col gap-0 text-center md:mx-auto md:w-4/5 lg:w-3/5"
+    >
+      <Tags tags={tags} />
+      <h1
+        class="font-headline text-4xl text-sage-800 dark:text-sage-500 lg:text-5xl"
+      >
+        {title}
+      </h1>
+
+      <time class="mt-2 text-base" datetime={modDate}>Updated: {modDate}</time>
+    </header>
+
+    <section
+      class="mx-auto flex flex-col-reverse justify-center gap-5 md:w-4/5 2xl:flex-row 2xl:items-start 2xl:gap-10"
+    >
+      <figure>
+        {
+          video ? (
+            <video
+              class="aspect-video w-[40rem] rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:focus-visible:ring-green-600"
+              preload="metadata"
+              controls
+            >
+              <source src={`${video}.webm`} type="video/webm" />
+              <source src={`${video}.mp4`} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              class="aspect-video w-[40rem] rounded-md"
+              src={img}
+              alt={img_alt}
+            />
+          )
+        }
+
+        <figcaption class="text-sm md:text-base">{img_alt}</figcaption>
+      </figure>
+      {
+        summary && (
+          <div class="max-w-[70ch] 2xl:basis-[50%]">
+            <h2 class="text-xl font-bold text-sage-800 dark:text-sage-500 2xl:text-2xl">
+              TL;DR
+            </h2>
+            <p class="text-lg 2xl:text-xl">{summary}</p>
+          </div>
+        )
+      }
+    </section>
+    <hr
+      role="presentation"
+      class="mx-auto w-1/2 border border-sage-800 opacity-20 dark:border-yellow-600 md:w-1/4"
+    />
+    <section class="mx-auto mt-4 w-full max-w-[70ch]">
+      <slot />
+    </section>
+  </article>
+</BaseLayout>

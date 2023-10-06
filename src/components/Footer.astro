@@ -1,0 +1,83 @@
+---
+import Socials from "./Socials.astro";
+
+const currentYear = new Date().getFullYear();
+const bio = {
+  name: "Axel Ingadi",
+  description:
+    "Is a software engineer focused on web development, with over 6 years of experience transforming ideas into seamless online experiences through code.",
+};
+---
+
+<footer class="mt-auto">
+  <div
+    class="flex flex-col items-center bg-sage-500 px-7 pb-5 pt-10 [clip-path:polygon(0%_1vw,100%_0%,100%_100%,0%_100%)] dark:bg-sage-700 md:flex-row md:items-end md:p-0 md:pt-5"
+  >
+    <div
+      class="flex flex-col items-center gap-4 md:mx-auto md:w-8/12 md:flex-row md:gap-10 lg:gap-16"
+    >
+      <div
+        role="img"
+        aria-label={`${bio.name}'s headshot'`}
+        aria-describedby="description"
+        data-src="/headshot.webp"
+        class="lazy h-36 w-36 shrink-0 grow-0 self-center rounded-full bg-yellow-500 bg-[length:224px_224px] bg-top bg-no-repeat dark:bg-yellow-600 md:h-56 md:w-56 md:self-end md:rounded-none md:bg-transparent md:bg-center dark:md:bg-transparent"
+      >
+      </div>
+      <div
+        class="flex flex-col items-center gap-2 self-end pb-4 md:items-start lg:gap-3"
+      >
+        <p id="description" class="flex flex-col">
+          <span
+            class="self-center font-brand text-2xl md:self-start md:text-start lg:text-3xl"
+          >
+            {bio.name}
+          </span>
+          <span
+            class="hyphens-auto text-justify text-base lg:text-lg xl:max-w-2xl"
+          >
+            {bio.description}
+          </span>
+        </p>
+        <div class="my-2 lg:m-0 lg:self-end">
+          <Socials name={bio.name} />
+        </div>
+      </div>
+    </div>
+    <small
+      class="text-base tracking-wider md:mb-3 md:mr-3 md:rotate-180 md:[writing-mode:vertical-lr]"
+      >&copy;{currentYear} &vert; Made with <strong
+        ><a
+          aria-description={"Link to AstroJS website"}
+          class="inline-block rounded underline transition-all hover:bg-sage-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:hover:text-yellow-900 dark:focus-visible:ring-green-600"
+          href="https://astro.build/">Astro</a
+        ></strong
+      ></small
+    >
+  </div>
+</footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const lazyBg = document.querySelector("div.lazy");
+
+    if (!(lazyBg instanceof HTMLElement)) return;
+
+    const bgImgSrc = lazyBg.dataset.src;
+
+    if ("IntersectionObserver" in window) {
+      const lazyBgObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const lazyBg = entry.target as HTMLElement;
+            lazyBg.style.backgroundImage = `url(${bgImgSrc})`;
+            lazyBg.classList.remove("lazy");
+            lazyBgObserver.unobserve(lazyBg);
+          }
+        });
+      });
+
+      lazyBgObserver.observe(lazyBg);
+    }
+  });
+</script>

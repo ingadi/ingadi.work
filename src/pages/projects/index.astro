@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectFeed from "../../components/ProjectFeed.astro";
+import { getCollection } from "astro:content";
+import FeedLabel from "../../components/FeedLabel.astro";
+import FeedWrapper from "../../components/FeedWrapper.astro";
+
+const allPosts = await getCollection("posts");
+const projectPreviews = allPosts
+  .filter((post) => post.data.type === "project")
+  .toSorted((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map(({ data, slug }) => ({ data, slug }));
+---
+
+<BaseLayout title="Projects" description="Axel Ingadi's projects">
+  <FeedWrapper>
+    <FeedLabel title="Projects">
+      <div
+        aria-description="Projects by Axel Ingadi"
+        id="project-feed"
+        class="hover-hover:lg:grid hover-hover:lg:grid-cols-2 hover-hover:2xl:grid-cols-3"
+      >
+        <ProjectFeed projectPreviews={projectPreviews} />
+      </div>
+    </FeedLabel>
+  </FeedWrapper>
+</BaseLayout>

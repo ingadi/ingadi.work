@@ -1,0 +1,64 @@
+---
+import { ArrowRight } from "lucide-astro";
+import { formatDate } from "../utils";
+
+interface Props {
+  title: string;
+  description: string;
+  img: string;
+  img_alt: string;
+  slug: string;
+  pubDate: Date;
+  tags: string[];
+  count: number;
+}
+
+const { title, description, pubDate, img, img_alt, slug, tags, count } =
+  Astro.props;
+---
+
+<a
+  aria-description={`Read more about ${title}`}
+  class="group inline-block rounded-md p-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:focus-visible:ring-green-600 md:mb-5 hover-hover:transition-all hover-hover:hover:bg-sage-500/40 dark:hover-hover:hover:bg-sage-500/20"
+  href={`/blog/${slug}`}
+>
+  <article class="flex flex-row-reverse gap-6">
+    <img
+      class="hidden aspect-square h-24 animate-shimmer select-none rounded-md bg-gradient-to-br from-sage-600 via-sage-400 to-sage-600 bg-400% md:block"
+      src={img}
+      alt={img_alt || ""}
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="flex gap-1">
+      <strong
+        class="select-none self-start font-brand text-sm text-green-800 dark:text-green-600/70 md:text-base"
+        >#{count}</strong
+      >
+      <div
+        class="flex flex-col gap-1 border-b border-dashed border-sage-500 pb-4 dark:border-yellow-600/40 hover-hover:group-hover:border-transparent"
+      >
+        <h2
+          class="flex justify-between text-lg font-bold text-sage-700 dark:text-sage-500 md:justify-normal md:gap-2 md:text-xl"
+        >
+          <span class="line-clamp-2">{title}</span>
+          <ArrowRight
+            class="opacity-50 hover-hover:-translate-x-1/2 hover-hover:opacity-0 hover-hover:transition-all hover-hover:group-hover:translate-x-0 hover-hover:group-hover:opacity-100"
+          />
+        </h2>
+        <p class="line-clamp-3 text-lg">{description}</p>
+        <div class="flex items-center justify-between text-sm font-bold">
+          <span class="text-green-800 dark:text-green-600/70"
+            >{tags.join(", ")}</span
+          >
+          <span class="flex gap-1">
+            <span aria-hidden="true">&mdash;</span>
+            <time datetime={formatDate(pubDate)}>
+              {formatDate(pubDate)}
+            </time>
+          </span>
+        </div>
+      </div>
+    </div>
+  </article>
+</a>

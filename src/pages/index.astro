@@ -1,16 +1,23 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BlogFeed from "../components/BlogFeed.astro";
+import { getCollection } from "astro:content";
+import FeedLabel from "../components/FeedLabel.astro";
+import FeedWrapper from "../components/FeedWrapper.astro";
 
+const allPosts = await getCollection("posts");
+const blogPostPreviews = allPosts
+  .filter((post) => post.data.type === "blogPost")
+  .toSorted((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map(({ data, slug }) => ({ data, slug }));
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Blog" description="Axel Ingadi's blog posts">
+  <FeedWrapper>
+    <FeedLabel title="Posts">
+      <div aria-description="Posts by Axel Ingadi">
+        <BlogFeed blogPostPreviews={blogPostPreviews} />
+      </div>
+    </FeedLabel>
+  </FeedWrapper>
+</BaseLayout>

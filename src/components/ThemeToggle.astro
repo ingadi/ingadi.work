@@ -1,0 +1,58 @@
+---
+import { Sun, Moon } from "lucide-astro";
+---
+
+<label
+  for="checkbox"
+  class="relative inline-block cursor-pointer transition-all hover:text-green-700 dark:hover:text-green-300 hover-none:scale-110"
+>
+  <input
+    type="checkbox"
+    name="checkbox"
+    id="checkbox"
+    class="peer h-0 w-0 opacity-0"
+  />
+  <span
+    aria-hidden="true"
+    class="visible absolute left-0 top-0 rounded-full peer-checked:invisible peer-focus-visible:outline-none peer-focus-visible:ring-4 peer-focus-visible:ring-green-700 dark:peer-focus-visible:ring-green-600"
+    ><Sun /></span
+  >
+  <span
+    aria-hidden="true"
+    class="invisible absolute left-0 top-0 rounded-full peer-checked:visible peer-focus-visible:outline-none peer-focus-visible:ring-4 peer-focus-visible:ring-green-700 dark:peer-focus-visible:ring-green-600"
+    ><Moon /></span
+  >
+  <span class="sr-only">Toggle theme</span>
+</label>
+
+<script>
+  addEventListener("load", async () => {
+    const checkbox = document.getElementById("checkbox") as HTMLInputElement;
+    const isDark = document.documentElement.classList.contains("dark");
+    checkbox.checked = isDark;
+
+    const { lightBackgroundPattern, darkBackgroundPattern } = await import(
+      "../constants/backgroundPattern"
+    );
+
+    const backgrounds = [lightBackgroundPattern, darkBackgroundPattern];
+    document.body.style.backgroundImage = backgrounds[Number(isDark)];
+
+    checkbox?.addEventListener("change", (e) => {
+      if (e.target === null) return;
+      const checkboxElement = e.target as HTMLInputElement;
+
+      document.documentElement.classList.toggle("dark");
+      document.body.style.backgroundImage =
+        backgrounds[Number(checkboxElement.checked)];
+    });
+
+    checkbox.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        const checkboxElement = e.target as HTMLInputElement;
+        checkboxElement.checked = !checkboxElement.checked;
+        checkboxElement.dispatchEvent(new Event("change"));
+      }
+    });
+  });
+</script>
