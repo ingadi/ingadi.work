@@ -23,7 +23,7 @@ const pages = [
         class:list={[
           "font-bold tracking-wide transition-all",
           {
-            "text-green-700 underline decoration-sage-700 decoration-wavy dark:text-green-300 dark:decoration-sage-500":
+            "text-green-700 underline decoration-sage-700 decoration-wavy underline-offset-1 dark:text-green-300 dark:decoration-sage-500":
               pathname === "/" || /^\/blog/.test(pathname),
           },
           {
@@ -44,7 +44,7 @@ const pages = [
             class:list={[
               "font-bold tracking-wide transition-all",
               {
-                "text-green-700 underline decoration-sage-700 decoration-wavy dark:text-green-300 dark:decoration-sage-500":
+                "text-green-700 underline decoration-sage-700 decoration-wavy underline-offset-1 dark:text-green-300 dark:decoration-sage-500":
                   new RegExp(`^\/${slug}*`).test(pathname),
               },
               {

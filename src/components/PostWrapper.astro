@@ -1,6 +1,8 @@
 ---
-import BaseLayout from "./BaseLayout.astro";
-import Tags from "../components/Tags.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import RelatedPosts from "./RelatedPosts.astro";
+import { capitalizeWord } from "../utils";
+import Tags from "./Tags.astro";
 
 interface Props {
   title: string;
@@ -86,5 +88,6 @@ const {
       class="mx-auto w-1/2 border border-sage-800 opacity-20 dark:border-yellow-600 md:w-1/4"
     />
     <slot />
+    <RelatedPosts tag={capitalizeWord(tags[0])} />
   </article>
 </BaseLayout>

@@ -1,0 +1,11 @@
+---
+interface Props {
+  tag: string;
+}
+
+const { tag } = Astro.props;
+---
+
+<section>
+  <h2>More from <span class="underline">{tag}</span></h2>
+</section>
