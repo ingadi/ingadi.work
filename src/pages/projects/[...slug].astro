@@ -1,5 +1,5 @@
 ---
-import ContentLayout from "../../layouts/ContentLayout.astro";
+import PostWrapper from "../../layouts/PostWrapper.astro";
 import { type CollectionEntry, getCollection } from "astro:content";
 import { formatDate } from "../../utils";
 
@@ -9,7 +9,7 @@ interface Props {
 
 export async function getStaticPaths() {
   return (await getCollection("posts"))
-    .filter((post) => post.data.type === "project")
+    .filter((post) => post.data.tags[0] === "project" && !post.data.isDraft)
     .map((project) => ({
       params: { slug: project.slug },
       props: { project },
@@ -19,19 +19,21 @@ export async function getStaticPaths() {
 export const prerender = true;
 
 const { project } = Astro.props;
+
 const { Content } = await project.render();
 ---
 
-<ContentLayout
+<PostWrapper
   title={project.data.title}
   description={project.data.description}
-  img={project.data.img}
-  img_alt={project.data.img_alt || ""}
-  video={project.data.video}
-  tags={project.data.tags}
+  img={project.data.image.url}
+  img_alt={project.data.image.alt}
+  video={project.data.video?.url}
+  video_description={project.data.video?.description}
+  tags={project.data.tags.slice(2)}
   modDate={formatDate(project.data.modDate)}
   pubDate=""
   summary={project.data.summary}
 >
   <Content />
-</ContentLayout>
+</PostWrapper>

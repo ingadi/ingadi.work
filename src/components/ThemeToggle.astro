@@ -8,6 +8,7 @@ import {
 ---
 
 <label
+  aria-label="Change website theme"
   for="checkbox"
   class="relative inline-block cursor-pointer transition-all hover:text-green-700 dark:hover:text-green-300 hover-none:scale-110"
 >
@@ -27,7 +28,6 @@ import {
     class="invisible absolute left-0 top-0 rounded-full peer-checked:visible peer-focus-visible:outline-none peer-focus-visible:ring-4 peer-focus-visible:ring-green-700 dark:peer-focus-visible:ring-green-600"
     ><Moon /></span
   >
-  <span class="sr-only">Toggle theme</span>
 </label>
 
 <script define:vars={{ lightBackgroundPattern, darkBackgroundPattern }}>

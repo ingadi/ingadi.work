@@ -23,3 +23,7 @@ export function formatDate(date: Date) {
   const [year, month, day] = getYearMonthDay(date);
   return `${monthNames[Number(month) - 1]} ${day}, ${year}`;
 }
+
+export function capitalizeWord(word: string) {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}

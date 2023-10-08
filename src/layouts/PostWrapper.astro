@@ -1,0 +1,90 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Tags from "../components/Tags.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  img: string;
+  img_alt: string;
+  video?: string;
+  video_description?: string;
+  tags: string[];
+  modDate: string;
+  pubDate: string;
+  summary?: string;
+}
+
+const {
+  title,
+  description,
+  img,
+  img_alt,
+  tags,
+  modDate,
+  pubDate,
+  video,
+  video_description,
+  summary,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="flex flex-col gap-12 px-4 text-lg md:px-7 md:text-xl lg:p-0">
+    <header class="flex flex-col justify-center md:text-center">
+      <nav class="self-center" aria-label="Related tags">
+        <Tags tags={tags} />
+      </nav>
+      <h1
+        class="font-headline text-4xl text-sage-800 dark:text-sage-500 lg:text-5xl"
+      >
+        {title}
+      </h1>
+
+      <time class="mt-2 text-base" datetime={modDate}>Updated: {modDate}</time>
+    </header>
+    <section
+      class="flex flex-col items-center gap-5 2xl:flex-row-reverse 2xl:items-start 2xl:justify-center 2xl:gap-10"
+    >
+      {
+        summary && (
+          <div class="max-w-[70ch] 2xl:basis-[50%]">
+            <h2 class="text-xl font-bold text-sage-800 dark:text-sage-500 2xl:text-2xl">
+              TL;DR
+            </h2>
+            <p class="text-lg 2xl:text-xl">{summary}</p>
+          </div>
+        )
+      }
+      <figure>
+        {
+          video ? (
+            <video
+              class="aspect-video w-[40rem] rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:focus-visible:ring-green-600"
+              preload="metadata"
+              controls
+            >
+              <source src={`${video}.webm`} type="video/webm" />
+              <source src={`${video}.mp4`} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              class="aspect-video w-[40rem] rounded-md"
+              src={img}
+              alt={img_alt}
+            />
+          )
+        }
+
+        <figcaption class="text-sm md:text-base">
+          {video ? video_description : img_alt}
+        </figcaption>
+      </figure>
+    </section>
+    <hr
+      role="presentation"
+      class="mx-auto w-1/2 border border-sage-800 opacity-20 dark:border-yellow-600 md:w-1/4"
+    />
+    <slot />
+  </article>
+</BaseLayout>
