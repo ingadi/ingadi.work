@@ -12,17 +12,17 @@ const { projectPreviews } = Astro.props;
 ---
 
 {
-  projectPreviews.map(({ data, slug }, id) => (
+  projectPreviews.map(({ data, slug }) => (
     <ProjectPreview
       title={data.title}
-      img={data.img}
-      img_alt={data.img_alt || ""}
+      img={data.image.url}
+      img_alt={data.image.alt}
       description={data.description}
-      video={data.video}
-      tags={data.tags}
+      video={data.video?.url}
+      tags={data.tags.slice(2)}
       slug={slug}
       pubDate={data.pubDate}
-      count={projectPreviews.length - id}
+      id={data.id}
     />
   ))
 }

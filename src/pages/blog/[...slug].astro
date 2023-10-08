@@ -1,5 +1,5 @@
 ---
-import ContentLayout from "../../layouts/ContentLayout.astro";
+import PostWrapper from "../../layouts/PostWrapper.astro";
 import { type CollectionEntry, getCollection } from "astro:content";
 import { formatDate } from "../../utils";
 
@@ -9,7 +9,7 @@ interface Props {
 
 export async function getStaticPaths() {
   return (await getCollection("posts"))
-    .filter((post) => post.data.type === "blogPost")
+    .filter((post) => post.data.tags[0] === "blogPost" && !post.data.isDraft)
     .map((blogPost) => ({
       params: { slug: blogPost.slug },
       props: { blogPost },
@@ -22,15 +22,15 @@ const { blogPost } = Astro.props;
 const { Content } = await blogPost.render();
 ---
 
-<ContentLayout
+<PostWrapper
   title={blogPost.data.title}
   description={blogPost.data.description}
-  tags={blogPost.data.tags}
-  img={blogPost.data.img}
-  img_alt={blogPost.data.img_alt || ""}
+  tags={blogPost.data.tags.slice(2)}
+  img={blogPost.data.image.url}
+  img_alt={blogPost.data.image.alt}
   modDate={formatDate(blogPost.data.modDate)}
   pubDate={formatDate(blogPost.data.pubDate)}
   summary={blogPost.data.summary}
 >
   <Content />
-</ContentLayout>
+</PostWrapper>

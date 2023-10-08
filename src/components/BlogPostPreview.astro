@@ -1,8 +1,9 @@
 ---
 import { ArrowRight } from "lucide-astro";
-import { formatDate } from "../utils";
+import { formatDate, capitalizeWord } from "../utils";
 
 interface Props {
+  id: number;
   title: string;
   description: string;
   img: string;
@@ -10,10 +11,9 @@ interface Props {
   slug: string;
   pubDate: Date;
   tags: string[];
-  count: number;
 }
 
-const { title, description, pubDate, img, img_alt, slug, tags, count } =
+const { title, description, pubDate, img, img_alt, slug, tags, id } =
   Astro.props;
 ---
 
@@ -33,7 +33,7 @@ const { title, description, pubDate, img, img_alt, slug, tags, count } =
     <div class="flex gap-1">
       <strong
         class="select-none self-start font-brand text-sm text-green-800 dark:text-green-600/70 md:text-base"
-        >#{count}</strong
+        >#{id}</strong
       >
       <div
         class="flex flex-col gap-1 border-b border-dashed border-sage-500 pb-4 dark:border-yellow-600/40 hover-hover:group-hover:border-transparent"
@@ -49,7 +49,7 @@ const { title, description, pubDate, img, img_alt, slug, tags, count } =
         <p class="line-clamp-3 text-lg">{description}</p>
         <div class="flex items-center justify-between text-sm font-bold">
           <span class="text-green-800 dark:text-green-600/70"
-            >{tags.join(", ")}</span
+            >{tags.map(capitalizeWord).join(", ")}</span
           >
           <span class="flex gap-1">
             <span aria-hidden="true">&mdash;</span>

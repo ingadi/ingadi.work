@@ -12,16 +12,16 @@ const { blogPostPreviews } = Astro.props;
 ---
 
 {
-  blogPostPreviews.map(({ data, slug }, id) => (
+  blogPostPreviews.map(({ data, slug }) => (
     <BlogPostPreview
+      id={data.id}
       title={data.title}
       description={data.description}
       pubDate={data.pubDate}
-      img={data.img}
-      img_alt={data.img_alt || ""}
+      tags={data.tags.slice(2)}
+      img={data.image.url}
+      img_alt={data.image.alt}
       slug={slug}
-      tags={data.tags}
-      count={blogPostPreviews.length - id}
     />
   ))
 }
