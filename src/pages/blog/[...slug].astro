@@ -23,6 +23,7 @@ const { Content } = await blogPost.render();
 ---
 
 <PostWrapper
+  id={blogPost.data.id}
   title={blogPost.data.title}
   description={blogPost.data.description}
   tags={blogPost.data.tags.slice(2)}

@@ -1,11 +1,18 @@
 ---
+import FeedWrapper from "./FeedWrapper.astro";
+import BlogPostPreview from "./BlogPostPreview.astro";
+
 interface Props {
+  id: number;
   tag: string;
+  isStory: boolean;
 }
 
-const { tag } = Astro.props;
+const { tag, isStory, id } = Astro.props;
 ---
 
 <section>
-  <h2>More from <span class="underline">{tag}</span></h2>
+  <FeedWrapper>
+    <h2>More from <span class="underline">{tag}</span></h2>
+  </FeedWrapper>
 </section>

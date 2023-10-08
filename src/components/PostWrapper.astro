@@ -5,6 +5,7 @@ import { capitalizeWord } from "../utils";
 import Tags from "./Tags.astro";
 
 interface Props {
+  id: number;
   title: string;
   description: string;
   img: string;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const {
+  id,
   title,
   description,
   img,
@@ -33,15 +35,21 @@ const {
 
 <BaseLayout title={title} description={description}>
   <article class="flex flex-col gap-12 px-4 text-lg md:px-7 md:text-xl lg:p-0">
-    <header class="flex flex-col justify-center md:text-center">
+    <header class="flex flex-col items-center">
       <nav class="self-center" aria-label="Related tags">
         <Tags tags={tags} />
       </nav>
-      <h1
-        class="font-headline text-4xl text-sage-800 dark:text-sage-500 lg:text-5xl"
-      >
-        {title}
-      </h1>
+      <div class="flex gap-2">
+        <strong
+          class="select-none self-start font-brand text-sm text-green-800 dark:text-green-600/90 md:text-base"
+          >#{id}</strong
+        >
+        <h1
+          class="font-headline text-4xl text-sage-800 dark:text-sage-500 lg:text-5xl"
+        >
+          {title}
+        </h1>
+      </div>
 
       <time class="mt-2 text-base" datetime={modDate}>Updated: {modDate}</time>
     </header>
@@ -88,6 +96,6 @@ const {
       class="mx-auto w-1/2 border border-sage-800 opacity-20 dark:border-yellow-600 md:w-1/4"
     />
     <slot />
-    <RelatedPosts tag={capitalizeWord(tags[0])} />
+    <RelatedPosts tag={capitalizeWord(tags[0])} isStory={false} id={id} />
   </article>
 </BaseLayout>
