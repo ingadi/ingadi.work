@@ -5,11 +5,9 @@ import { getCollection } from "astro:content";
 import FeedLabel from "../components/FeedLabel.astro";
 import FeedWrapper from "../components/FeedWrapper.astro";
 
-const allPosts = await getCollection("posts");
-
-const blogPostsPreviews = allPosts
+const blogPostsPreviews = (await getCollection("posts"))
   .filter((post) => post.data.tags[0] === "blogPost" && !post.data.isDraft)
-  .toSorted((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .map(({ data, slug }) => ({ data, slug }));
 ---
 
