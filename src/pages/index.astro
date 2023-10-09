@@ -6,6 +6,8 @@ import FeedLabel from "../components/FeedLabel.astro";
 import FeedWrapper from "../components/FeedWrapper.astro";
 
 const allPosts = await getCollection("posts");
+console.log(allPosts);
+
 const blogPostPreviews = allPosts
   .filter((post) => post.data.tags[0] === "blogPost" && !post.data.isDraft)
   .toSorted((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
