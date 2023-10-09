@@ -1,5 +1,16 @@
 import { defineCollection, z } from "astro:content";
 
+export const PostTypeSchema = z.union([
+  z.literal("blogPost"),
+  z.literal("project"),
+]);
+
+export const CategorySchema = z.union([
+  z.literal("programming"),
+  z.literal("book"),
+  z.literal("opinion"),
+]);
+
 const postCollection = defineCollection({
   type: "content",
   schema: z.object({
@@ -43,14 +54,7 @@ const postCollection = defineCollection({
       })
       .optional(),
     tags: z
-      .tuple([
-        z.union([z.literal("blogPost"), z.literal("project")]),
-        z.union([
-          z.literal("programming"),
-          z.literal("book"),
-          z.literal("opinion"),
-        ]),
-      ])
+      .tuple([PostTypeSchema, CategorySchema])
       .rest(
         z.string().regex(/^[a-z]+$/g, { message: "Tags must be lowercase" }),
       ),

@@ -1,7 +1,7 @@
 ---
-interface Props {
-  tags: string[];
-}
+import type { CollectionEntry } from "astro:content";
+
+type Props = Pick<CollectionEntry<"posts">["data"], "tags">;
 
 const { tags } = Astro.props;
 ---

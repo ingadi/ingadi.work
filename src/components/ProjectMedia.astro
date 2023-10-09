@@ -1,11 +1,9 @@
 ---
-interface Props {
-  img: string;
-  img_alt: string;
-  video?: string;
-}
+import type { CollectionEntry } from "astro:content";
 
-const { img, img_alt, video } = Astro.props;
+type Props = Pick<CollectionEntry<"posts">["data"], "video" | "image">;
+
+const { image, video } = Astro.props;
 ---
 
 <img
@@ -17,8 +15,8 @@ const { img, img_alt, video } = Astro.props;
         video !== undefined,
     },
   ]}
-  src={img}
-  alt={img_alt || ""}
+  src={image.url}
+  alt={image.alt}
   loading="lazy"
   decoding="async"
 />
@@ -33,8 +31,8 @@ const { img, img_alt, video } = Astro.props;
       loop
       playsinline
     >
-      <source data-src={`${video}.webm`} type="video/webm" />
-      <source data-src={`${video}.mp4`} type="video/mp4" />
+      <source data-src={`${video.url}.webm`} type="video/webm" />
+      <source data-src={`${video.url}.mp4`} type="video/mp4" />
     </video>
   )
 }

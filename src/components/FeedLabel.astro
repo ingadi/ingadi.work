@@ -1,12 +1,14 @@
 ---
-interface Props {
-  title: string;
-  subtitle?: string;
-  subSubTitle?: string;
-}
+import { PostTypeSchema, CategorySchema } from "../content/config";
+import { z } from "astro:content";
 
-const { title, subtitle, subSubTitle } = Astro.props;
-const titles = [title];
+type Props = {
+  category: z.infer<typeof PostTypeSchema> | z.infer<typeof CategorySchema>;
+  tag?: string;
+};
+
+const { category, tag } = Astro.props;
+const titles = [category];
 ---
 
 <article class="md:flex md:items-start md:gap-1">

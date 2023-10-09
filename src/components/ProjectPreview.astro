@@ -1,21 +1,16 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import { ArrowRight } from "lucide-astro";
 import { formatDate, capitalizeWord } from "../utils";
 import ProjectMedia from "./ProjectMedia.astro";
 
-interface Props {
-  id: number;
-  title: string;
-  img: string;
-  video?: string;
-  description: string;
-  img_alt: string;
-  slug: string;
-  tags: string[];
-  pubDate: Date;
-}
+type Props = Omit<
+  CollectionEntry<"posts">["data"],
+  "isDraft" | "summary" | "series"
+> &
+  Pick<CollectionEntry<"posts">, "slug">;
 
-const { title, img, img_alt, video, slug, pubDate, description, tags, id } =
+const { title, image, video, slug, pubDate, description, tags, id } =
   Astro.props;
 ---
 
@@ -27,7 +22,7 @@ const { title, img, img_alt, video, slug, pubDate, description, tags, id } =
   <article
     class="group flex flex-row-reverse gap-8 hover-hover:lg:grid hover-hover:lg:break-inside-avoid hover-hover:lg:gap-3"
   >
-    <ProjectMedia img={img} img_alt={img_alt} video={video} />
+    <ProjectMedia {image} {video} />
     <div
       class:list={[
         "flex gap-1 transition-all hover-hover:lg:pointer-events-none hover-hover:lg:relative hover-hover:lg:col-span-full hover-hover:lg:row-span-full hover-hover:lg:flex-col hover-hover:lg:justify-between hover-hover:lg:overflow-hidden hover-hover:lg:rounded-md hover-hover:lg:bg-gradient-to-b hover-hover:lg:from-gray-900/40 hover-hover:lg:via-gray-50/0 hover-hover:lg:to-gray-900/40 hover-hover:lg:p-2",
@@ -60,7 +55,7 @@ const { title, img, img_alt, video, slug, pubDate, description, tags, id } =
         >
           <span
             class="line-clamp-1 text-green-800 dark:text-green-600/70 hover-hover:lg:text-yellow-300 hover-hover:dark:lg:text-yellow-500"
-            >{tags.map(capitalizeWord).join(", ")}</span
+            >{tags.slice(2).map(capitalizeWord).join(", ")}</span
           >
           <span
             class="flex items-center gap-1 rounded-sm hover-hover:lg:absolute hover-hover:lg:bottom-2 hover-hover:lg:right-1 hover-hover:lg:rotate-180 hover-hover:lg:bg-black/20 hover-hover:lg:py-2 hover-hover:lg:[writing-mode:vertical-lr]"

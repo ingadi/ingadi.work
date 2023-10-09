@@ -1,11 +1,9 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import FeedWrapper from "./FeedWrapper.astro";
 import BlogPostPreview from "./BlogPostPreview.astro";
 
-interface Props {
-  tags: string[];
-  series?: number[];
-}
+type Props = Pick<CollectionEntry<"posts">["data"], "tags" | "series">;
 
 const { tags, series } = Astro.props;
 ---

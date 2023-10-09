@@ -2,21 +2,10 @@
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import RelatedPosts from "./RelatedPosts.astro";
-import { capitalizeWord } from "../utils";
 import Tags from "./Tags.astro";
 import { formatDate } from "../utils";
 
 type Props = CollectionEntry<"posts">["data"];
-
-// id={post.data.id}
-//   title={post.data.title}
-//   description={post.data.description}
-//   tags={post.data.tags.slice(2)}
-//   img={post.data.image.url}
-//   img_alt={post.data.image.alt}
-//   modDate={formatDate(post.data.modDate)}
-//   pubDate={formatDate(post.data.pubDate)}
-//   summary={post.data.summary}
 
 const {
   id,
@@ -51,7 +40,7 @@ const {
       </div>
 
       <time class="mt-2 text-base" datetime={formatDate(modDate)}
-        >Updated: {modDate}</time
+        >Updated: {formatDate(modDate)}</time
       >
     </header>
     <section
@@ -75,8 +64,8 @@ const {
               preload="metadata"
               controls
             >
-              <source src={`${video}.webm`} type="video/webm" />
-              <source src={`${video}.mp4`} type="video/mp4" />
+              <source src={`${video.url}.webm`} type="video/webm" />
+              <source src={`${video.url}.mp4`} type="video/mp4" />
             </video>
           ) : (
             <img

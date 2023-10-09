@@ -3,25 +3,9 @@ import type { CollectionEntry } from "astro:content";
 import BlogPostPreview from "./BlogPostPreview.astro";
 
 type BlogPostPreview = Pick<CollectionEntry<"posts">, "data" | "slug">;
-
-interface Props {
-  blogPostPreviews: BlogPostPreview[];
-}
+type Props = { blogPostPreviews: BlogPostPreview[] };
 
 const { blogPostPreviews } = Astro.props;
 ---
 
-{
-  blogPostPreviews.map(({ data, slug }) => (
-    <BlogPostPreview
-      id={data.id}
-      title={data.title}
-      description={data.description}
-      pubDate={data.pubDate}
-      tags={data.tags.slice(2)}
-      img={data.image.url}
-      img_alt={data.image.alt}
-      slug={slug}
-    />
-  ))
-}
+{blogPostPreviews.map(({ data, slug }) => <BlogPostPreview {...data} {slug} />)}

@@ -1,20 +1,15 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import { ArrowRight } from "lucide-astro";
 import { formatDate, capitalizeWord } from "../utils";
 
-interface Props {
-  id: number;
-  title: string;
-  description: string;
-  img: string;
-  img_alt: string;
-  slug: string;
-  pubDate: Date;
-  tags: string[];
-}
+type Props = Omit<
+  CollectionEntry<"posts">["data"],
+  "video" | "isDraft" | "summary" | "series"
+> &
+  Pick<CollectionEntry<"posts">, "slug">;
 
-const { title, description, pubDate, img, img_alt, slug, tags, id } =
-  Astro.props;
+const { title, description, pubDate, image, slug, tags, id } = Astro.props;
 ---
 
 <a
@@ -25,8 +20,8 @@ const { title, description, pubDate, img, img_alt, slug, tags, id } =
   <article class="flex flex-row-reverse gap-6">
     <img
       class="hidden aspect-square h-24 animate-shimmer select-none rounded-md bg-gradient-to-br from-sage-600 via-sage-400 to-sage-600 bg-400% md:block"
-      src={img}
-      alt={img_alt || ""}
+      src={image.url}
+      alt={image.alt}
       loading="lazy"
       decoding="async"
     />
@@ -49,7 +44,7 @@ const { title, description, pubDate, img, img_alt, slug, tags, id } =
         <p class="line-clamp-3 text-lg">{description}</p>
         <div class="flex items-center justify-between text-sm font-bold">
           <span class="text-green-800 dark:text-green-600/70"
-            >{tags.map(capitalizeWord).join(", ")}</span
+            >{tags.slice(2).map(capitalizeWord).join(", ")}</span
           >
           <span class="flex gap-1">
             <span aria-hidden="true">&mdash;</span>

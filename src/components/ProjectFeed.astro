@@ -3,29 +3,12 @@ import type { CollectionEntry } from "astro:content";
 import ProjectPreview from "./ProjectPreview.astro";
 
 type ProjectPreview = Pick<CollectionEntry<"posts">, "data" | "slug">;
-
-interface Props {
-  projectPreviews: ProjectPreview[];
-}
+type Props = { projectPreviews: ProjectPreview[] };
 
 const { projectPreviews } = Astro.props;
 ---
 
-{
-  projectPreviews.map(({ data, slug }) => (
-    <ProjectPreview
-      title={data.title}
-      img={data.image.url}
-      img_alt={data.image.alt}
-      description={data.description}
-      video={data.video?.url}
-      tags={data.tags.slice(2)}
-      slug={slug}
-      pubDate={data.pubDate}
-      id={data.id}
-    />
-  ))
-}
+{projectPreviews.map(({ data, slug }) => <ProjectPreview {...data} {slug} />)}
 
 <script>
   const projectFeedElement = document.getElementById("project-feed");

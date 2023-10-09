@@ -1,8 +1,8 @@
 ---
-interface Props {
+type Props = {
   title?: string | undefined;
   description?: string | undefined;
-}
+};
 
 const { title, description = "The personal site of Axel Ingadi" } = Astro.props;
 ---
