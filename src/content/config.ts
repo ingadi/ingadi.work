@@ -47,34 +47,14 @@ const postCollection = defineCollection({
         z.union([z.literal("blogPost"), z.literal("project")]),
         z.union([
           z.literal("programming"),
-          z.literal("books"),
+          z.literal("book"),
           z.literal("opinion"),
-          z.literal("marketing"),
         ]),
       ])
       .rest(
         z.string().regex(/^[a-z]+$/g, { message: "Tags must be lowercase" }),
       ),
     isDraft: z.boolean(),
-    // category: z.union([
-    //   z.literal("programming"),
-    //   z.literal("books"),
-    //   z.literal("opinion"),
-    //   z.literal("marketing"),
-    // ]),
-    // tags: z.array(
-    //   z.union([
-    //     z.literal("programming"),
-    //     z.literal("books"),
-    //     z.literal("opinion"),
-    //     z.literal("marketing"),
-    //   ]),
-    //   z.string(),
-    // ),
-    // img: z.string(),
-    // img_alt: z.string().optional(),
-    // video: z.string().optional(),
-    // type: z.union([z.literal("blogPost"), z.literal("project")]),
   }),
 });
 
