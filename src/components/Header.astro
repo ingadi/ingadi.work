@@ -1,11 +1,10 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
 import { capitalizeWord } from "../utils";
+import { SITE_TITLE } from "../../consts";
 
 const pathname = new URL(Astro.request.url).pathname;
-const pages = [
-  { slug: "projects", accesibilityLabel: "Navigate to projects page" },
-];
+const pages = ["blog", "projects"];
 ---
 
 <header>
@@ -16,52 +15,39 @@ const pages = [
     <a
       aria-label="Navigate to homepage"
       class="rounded-md font-brand text-4xl tracking-wider hover:text-green-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:hover:text-green-300 dark:focus-visible:ring-green-600 sm:mr-auto"
-      href="/">ingadi.work</a
+      href="/">{SITE_TITLE}</a
     >
     <ul class="mr-4 flex items-center gap-4 text-xl">
-      <li
-        class:list={[
-          "font-bold tracking-wide transition-all",
-          {
-            "text-green-700 underline decoration-sage-700 decoration-wavy underline-offset-1 dark:text-green-300 dark:decoration-sage-500":
-              pathname === "/" || /^\/blog/.test(pathname),
-          },
-          {
-            "text-current  hover:text-green-700 dark:text-yellow-400 dark:hover:text-green-300":
-              !(pathname === "/" || /^\/blog/.test(pathname)),
-          },
-        ]}
-      >
-        <a
-          aria-label="Navigate to blog posts page"
-          class="rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:focus-visible:ring-green-600"
-          href="/">Blog</a
-        >
-      </li>
       {
-        pages.map(({ slug, accesibilityLabel }) => (
-          <li
-            class:list={[
-              "font-bold tracking-wide transition-all",
-              {
-                "text-green-700 underline decoration-sage-700 decoration-wavy underline-offset-1 dark:text-green-300 dark:decoration-sage-500":
-                  new RegExp(`^\/${slug}*`).test(pathname),
-              },
-              {
-                "text-current  hover:text-green-700 dark:text-yellow-400 dark:hover:text-green-300":
-                  !new RegExp(`^\/${slug}*`).test(pathname),
-              },
-            ]}
-          >
-            <a
-              aria-label={accesibilityLabel}
-              class="rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:focus-visible:ring-green-600"
-              href={`/${slug}`}
+        pages.map((page) => {
+          const isActive =
+            (page === "blog" && pathname === "/") ||
+            new RegExp(`^\/${page}*`).test(pathname);
+
+          return (
+            <li
+              class:list={[
+                "font-bold tracking-wide transition-all",
+                {
+                  "text-green-700 underline decoration-sage-700 decoration-wavy underline-offset-1 dark:text-green-300 dark:decoration-sage-500":
+                    isActive,
+                },
+                {
+                  "text-current  hover:text-green-700 dark:text-yellow-400 dark:hover:text-green-300":
+                    !isActive,
+                },
+              ]}
             >
-              {capitalizeWord(slug)}
-            </a>
-          </li>
-        ))
+              <a
+                aria-label={`Navigate to ${page} page`}
+                class="rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:focus-visible:ring-green-600"
+                href={`/${page}`}
+              >
+                {capitalizeWord(page)}
+              </a>
+            </li>
+          );
+        })
       }
       <li>
         <ThemeToggle />

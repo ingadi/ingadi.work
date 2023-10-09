@@ -25,5 +25,5 @@ export function formatDate(date: Date) {
 }
 
 export function capitalizeWord(word: string) {
-  return word.charAt(0).toLocaleLowerCase() + word.slice(1).toLocaleLowerCase();
+  return word.charAt(0).toLocaleUpperCase() + word.slice(1).toLocaleLowerCase();
 }

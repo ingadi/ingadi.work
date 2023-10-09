@@ -1,10 +1,7 @@
 ---
 import { Sun, Moon } from "lucide-astro";
 
-import {
-  lightBackgroundPattern,
-  darkBackgroundPattern,
-} from "../constants/backgroundPattern";
+import { LIGHT_BG_PATTERN, DARK_BG_PATTERN } from "../../consts";
 ---
 
 <label
@@ -30,13 +27,13 @@ import {
   >
 </label>
 
-<script define:vars={{ lightBackgroundPattern, darkBackgroundPattern }}>
+<script define:vars={{ LIGHT_BG_PATTERN, DARK_BG_PATTERN }}>
   addEventListener("load", async () => {
     const checkbox = document.getElementById("checkbox");
     const isDark = document.documentElement.classList.contains("dark");
     checkbox.checked = isDark;
 
-    const backgrounds = [lightBackgroundPattern, darkBackgroundPattern];
+    const backgrounds = [DARK_BG_PATTERN, DARK_BG_PATTERN];
     document.body.style.backgroundImage = backgrounds[Number(isDark)];
 
     checkbox?.addEventListener("change", (e) => {

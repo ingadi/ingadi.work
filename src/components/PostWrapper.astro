@@ -23,25 +23,27 @@ const {
 
 <BaseLayout title={title} description={description}>
   <article class="flex flex-col gap-12 px-4 text-lg md:px-7 md:text-xl lg:p-0">
-    <header class="flex flex-col items-center">
+    <header class="flex flex-col items-center gap-2 md:gap-4">
       <nav class="self-center" aria-label="Related tags">
-        <Tags tags={tags.slice(2)} />
+        <Tags {tags} />
       </nav>
-      <div class="flex gap-2">
-        <strong
-          class="select-none self-start font-brand text-sm text-green-800 dark:text-green-600/90 md:text-base"
-          >#{id}</strong
-        >
-        <h1
-          class="font-headline text-4xl text-sage-800 dark:text-sage-500 lg:text-5xl"
-        >
-          {title}
-        </h1>
-      </div>
+      <div class="flex flex-col items-center">
+        <span class="flex gap-1 md:gap-2">
+          <strong
+            class="select-none self-start font-brand text-sm text-green-800 dark:text-green-600/90 md:text-base"
+            >#{id}</strong
+          >
+          <h1
+            class="font-headline text-4xl text-sage-800 dark:text-sage-500 lg:text-5xl"
+          >
+            {title}
+          </h1>
+        </span>
 
-      <time class="mt-2 text-base" datetime={formatDate(modDate)}
-        >Updated: {formatDate(modDate)}</time
-      >
+        <time class="mt-2 text-base" datetime={formatDate(modDate)}
+          >Updated: {formatDate(modDate)}</time
+        >
+      </div>
     </header>
     <section
       class="flex flex-col items-center gap-5 2xl:flex-row-reverse 2xl:items-start 2xl:justify-center 2xl:gap-10"
@@ -86,6 +88,6 @@ const {
       class="mx-auto w-1/2 border border-sage-800 opacity-20 dark:border-yellow-600 md:w-1/4"
     />
     <slot />
-    <RelatedPosts tags={tags.slice(2)} {series} />
+    <RelatedPosts {tags} {series} />
   </article>
 </BaseLayout>

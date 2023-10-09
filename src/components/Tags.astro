@@ -6,19 +6,22 @@ type Props = Pick<CollectionEntry<"posts">["data"], "tags">;
 const { tags } = Astro.props;
 ---
 
-<ul class="flex items-center gap-1 uppercase">
+<ul class="flex items-center uppercase">
   {
-    tags.map((tag, id) => (
+    tags.slice(2).map((tag, id) => (
       <>
         <li class="text-sm font-bold text-green-800 dark:text-green-600 lg:text-base">
           {tag}
         </li>
-        {id !== tags.length - 1 && (
-          <li aria-hidden="true" class="text-2xl">
-            &middot;
-          </li>
-        )}
       </>
     ))
   }
 </ul>
+
+<style>
+  li:first-child::after {
+    content: "\2022";
+    margin-inline-start: 0.5rem;
+    margin-inline-end: 0.5rem;
+  }
+</style>
