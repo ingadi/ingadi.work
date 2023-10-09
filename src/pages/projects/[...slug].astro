@@ -1,40 +1,21 @@
 ---
 import PostWrapper from "../../components/PostWrapper.astro";
 import { type CollectionEntry, getCollection } from "astro:content";
-import { formatDate } from "../../utils";
-
-interface Props {
-  project: CollectionEntry<"posts">;
-}
 
 export async function getStaticPaths() {
   return (await getCollection("posts"))
     .filter((post) => post.data.tags[0] === "project" && !post.data.isDraft)
     .map((project) => ({
       params: { slug: project.slug },
-      props: { project },
+      props: project,
     }));
 }
 
-export const prerender = true;
-
-const { project } = Astro.props;
-
-const { Content } = await project.render();
+type Props = CollectionEntry<"posts">;
+const post = Astro.props;
+const { Content } = await post.render();
 ---
 
-<PostWrapper
-  id={project.data.id}
-  title={project.data.title}
-  description={project.data.description}
-  img={project.data.image.url}
-  img_alt={project.data.image.alt}
-  video={project.data.video?.url}
-  video_description={project.data.video?.description}
-  tags={project.data.tags.slice(2)}
-  modDate={formatDate(project.data.modDate)}
-  pubDate=""
-  summary={project.data.summary}
->
+<PostWrapper {...post.data}>
   <Content />
 </PostWrapper>

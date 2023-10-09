@@ -55,6 +55,7 @@ const postCollection = defineCollection({
         z.string().regex(/^[a-z]+$/g, { message: "Tags must be lowercase" }),
       ),
     isDraft: z.boolean(),
+    series: z.array(z.number()).optional(),
   }),
 });
 

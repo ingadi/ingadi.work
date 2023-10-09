@@ -1,35 +1,34 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import RelatedPosts from "./RelatedPosts.astro";
 import { capitalizeWord } from "../utils";
 import Tags from "./Tags.astro";
+import { formatDate } from "../utils";
 
-interface Props {
-  id: number;
-  title: string;
-  description: string;
-  img: string;
-  img_alt: string;
-  video?: string;
-  video_description?: string;
-  tags: string[];
-  modDate: string;
-  pubDate: string;
-  summary?: string;
-}
+type Props = CollectionEntry<"posts">["data"];
+
+// id={post.data.id}
+//   title={post.data.title}
+//   description={post.data.description}
+//   tags={post.data.tags.slice(2)}
+//   img={post.data.image.url}
+//   img_alt={post.data.image.alt}
+//   modDate={formatDate(post.data.modDate)}
+//   pubDate={formatDate(post.data.pubDate)}
+//   summary={post.data.summary}
 
 const {
   id,
   title,
   description,
-  img,
-  img_alt,
+  image,
   tags,
   modDate,
   pubDate,
   video,
-  video_description,
   summary,
+  series,
 } = Astro.props;
 ---
 
@@ -37,7 +36,7 @@ const {
   <article class="flex flex-col gap-12 px-4 text-lg md:px-7 md:text-xl lg:p-0">
     <header class="flex flex-col items-center">
       <nav class="self-center" aria-label="Related tags">
-        <Tags tags={tags} />
+        <Tags tags={tags.slice(2)} />
       </nav>
       <div class="flex gap-2">
         <strong
@@ -51,7 +50,9 @@ const {
         </h1>
       </div>
 
-      <time class="mt-2 text-base" datetime={modDate}>Updated: {modDate}</time>
+      <time class="mt-2 text-base" datetime={formatDate(modDate)}
+        >Updated: {modDate}</time
+      >
     </header>
     <section
       class="flex flex-col items-center gap-5 2xl:flex-row-reverse 2xl:items-start 2xl:justify-center 2xl:gap-10"
@@ -80,14 +81,14 @@ const {
           ) : (
             <img
               class="aspect-video w-[40rem] rounded-md"
-              src={img}
-              alt={img_alt}
+              src={image.url}
+              alt={image.alt}
             />
           )
         }
 
         <figcaption class="text-sm md:text-base">
-          {video ? video_description : img_alt}
+          {video ? video.description : image.alt}
         </figcaption>
       </figure>
     </section>
@@ -96,6 +97,6 @@ const {
       class="mx-auto w-1/2 border border-sage-800 opacity-20 dark:border-yellow-600 md:w-1/4"
     />
     <slot />
-    <RelatedPosts tag={capitalizeWord(tags[0])} isStory={false} id={id} />
+    <RelatedPosts tags={tags.slice(2)} {series} />
   </article>
 </BaseLayout>

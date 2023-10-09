@@ -3,16 +3,15 @@ import FeedWrapper from "./FeedWrapper.astro";
 import BlogPostPreview from "./BlogPostPreview.astro";
 
 interface Props {
-  id: number;
-  tag: string;
-  isStory: boolean;
+  tags: string[];
+  series?: number[];
 }
 
-const { tag, isStory, id } = Astro.props;
+const { tags, series } = Astro.props;
 ---
 
 <section>
   <FeedWrapper>
-    <h2>More from <span class="underline">{tag}</span></h2>
+    <h2>More from <span class="underline">{tags[0]}</span></h2>
   </FeedWrapper>
 </section>
