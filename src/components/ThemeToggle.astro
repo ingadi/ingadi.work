@@ -33,7 +33,7 @@ import { LIGHT_BG_PATTERN, DARK_BG_PATTERN } from "../../consts";
     const isDark = document.documentElement.classList.contains("dark");
     checkbox.checked = isDark;
 
-    const backgrounds = [DARK_BG_PATTERN, DARK_BG_PATTERN];
+    const backgrounds = [LIGHT_BG_PATTERN, DARK_BG_PATTERN];
     document.body.style.backgroundImage = backgrounds[Number(isDark)];
 
     checkbox?.addEventListener("change", (e) => {
