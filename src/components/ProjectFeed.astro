@@ -31,8 +31,12 @@ const { projectPreviews } = Astro.props;
         }
       }
 
-      videoElement.load();
-      videoElement.classList.remove("lazy");
+      new Promise((resolve) =>
+        setTimeout(() => {
+          videoElement.load();
+          videoElement.classList.remove("lazy");
+        }, 5000),
+      );
     });
 
     projectFeedElement.addEventListener("mouseout", (event) => {
