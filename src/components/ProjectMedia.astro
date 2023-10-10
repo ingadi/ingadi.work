@@ -24,8 +24,7 @@ const { image, video } = Astro.props;
 {
   video && (
     <video
-      class="lazy hidden rounded-md object-cover hover-hover:lg:invisible hover-hover:lg:col-span-full hover-hover:lg:row-span-full hover-hover:lg:block hover-hover:lg:aspect-video hover-hover:lg:h-52 hover-hover:lg:w-full hover-hover:lg:group-hover:visible"
-      poster={image.url}
+      class="lazy hidden animate-shimmer rounded-md bg-gradient-to-br from-sage-600 via-sage-400 to-sage-600 bg-400% object-cover hover-hover:lg:invisible hover-hover:lg:col-span-full hover-hover:lg:row-span-full hover-hover:lg:block hover-hover:lg:aspect-video hover-hover:lg:h-52 hover-hover:lg:w-full hover-hover:lg:group-hover:visible"
       preload="none"
       autoplay
       muted
