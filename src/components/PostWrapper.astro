@@ -50,7 +50,7 @@ const {
     >
       {
         summary && (
-          <div class="max-w-[70ch] 2xl:basis-[50%]">
+          <div class="max-w-[70ch] 2xl:basis-[30%]">
             <h2 class="text-xl font-bold text-sage-800 dark:text-sage-500 2xl:text-2xl">
               TL;DR
             </h2>
@@ -62,7 +62,7 @@ const {
         {
           video ? (
             <video
-              class="aspect-video w-[40rem] rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:focus-visible:ring-green-600"
+              class="aspect-video w-[35rem] rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-700 dark:focus-visible:ring-green-600"
               preload="metadata"
               controls
             >
@@ -71,7 +71,7 @@ const {
             </video>
           ) : (
             <img
-              class="aspect-video w-[40rem] animate-shimmer rounded-md bg-gradient-to-br from-sage-600 via-sage-400 to-sage-600 bg-400%"
+              class="aspect-video w-[35rem] animate-shimmer rounded-md bg-gradient-to-br from-sage-600 via-sage-400 to-sage-600 bg-400%"
               src={image.url}
               alt={image.alt}
             />
