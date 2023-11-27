@@ -1,8 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { ArrowRight } from "lucide-astro";
-import { formatDate, capitalizeWord } from "../utils";
-import ProjectMedia from "./ProjectMedia.astro";
+import { formatDate, capitalizeWord } from "@/utils";
+import ProjectMedia from "@/components/ProjectMedia.astro";
 
 type Props = Omit<
   CollectionEntry<"posts">["data"],

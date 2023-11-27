@@ -1,7 +1,7 @@
 ---
-import ThemeToggle from "./ThemeToggle.astro";
-import NavItem from "./NavItem.astro";
-import { capitalizeWord } from "../utils";
+import ThemeToggle from "@/components/ThemeToggle.astro";
+import NavItem from "@/components/NavItem.astro";
+import { capitalizeWord } from "@/utils";
 import { SITE_TITLE } from "../../consts";
 
 const pathname = new URL(Astro.request.url).pathname;

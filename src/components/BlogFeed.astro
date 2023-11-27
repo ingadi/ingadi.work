@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import BlogPostPreview from "./BlogPostPreview.astro";
+import BlogPostPreview from "@/components/BlogPostPreview.astro";
 
 type BlogPostPreview = Pick<CollectionEntry<"posts">, "data" | "slug">;
 type Props = { blogPostPreviews: BlogPostPreview[] };

@@ -1,9 +1,9 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import BaseLayout from "../layouts/BaseLayout.astro";
-import RelatedPosts from "./RelatedPosts.astro";
-import Tags from "./Tags.astro";
-import { formatDate } from "../utils";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import RelatedPosts from "@/components/RelatedPosts.astro";
+import Tags from "@/components/Tags.astro";
+import { formatDate } from "@/utils";
 
 type Props = CollectionEntry<"posts">["data"];
 

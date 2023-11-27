@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import FeedWrapper from "./FeedWrapper.astro";
-import BlogPostPreview from "./BlogPostPreview.astro";
+import FeedWrapper from "@/components/FeedWrapper.astro";
+import BlogPostPreview from "@/components/BlogPostPreview.astro";
 
 type Props = Pick<CollectionEntry<"posts">["data"], "tags" | "series">;
 

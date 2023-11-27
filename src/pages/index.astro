@@ -1,9 +1,9 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import BlogFeed from "../components/BlogFeed.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BlogFeed from "@/components/BlogFeed.astro";
 import { getCollection } from "astro:content";
-import FeedLabel from "../components/FeedLabel.astro";
-import FeedWrapper from "../components/FeedWrapper.astro";
+import FeedLabel from "@/components/FeedLabel.astro";
+import FeedWrapper from "@/components/FeedWrapper.astro";
 
 const blogPostsPreviews = (await getCollection("posts"))
   .filter((post) => post.data.tags[0] === "blogPost" && !post.data.isDraft)
